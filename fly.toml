@@ -1,0 +1,27 @@
+# Fly.io configuration for FinRAG API
+app = "finrag-api"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  VECTOR_STORE_PATH = "/app/data/vector_store"
+  UPLOAD_DIR = "/app/data/uploads"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[mounts]
+  source = "finrag_data"
+  destination = "/app/data"
