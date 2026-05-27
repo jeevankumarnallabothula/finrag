@@ -14,8 +14,9 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     CLAUDE_MODEL: str = "claude-haiku-4-5-20251001"
 
-    # Embeddings (HuggingFace — free, no API key needed)
-    EMBEDDING_MODEL: str = "sentence-transformers/all-MiniLM-L6-v2"
+    # Voyage AI embeddings (cloud API — no local model download)
+    VOYAGE_API_KEY: str = ""
+    EMBEDDING_MODEL: str = "voyage-3-lite"
 
     # RAG tuning
     CHUNK_SIZE: int = 800

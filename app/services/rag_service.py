@@ -15,7 +15,7 @@ from typing import Optional
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_anthropic import ChatAnthropic
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_voyageai import VoyageAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferWindowMemory
@@ -52,8 +52,9 @@ class RAGService:
     """
 
     def __init__(self):
-        self.embeddings = HuggingFaceEmbeddings(
-            model_name=settings.EMBEDDING_MODEL,
+        self.embeddings = VoyageAIEmbeddings(
+            voyage_api_key=settings.VOYAGE_API_KEY,
+            model=settings.EMBEDDING_MODEL,
         )
         self.llm = ChatAnthropic(
             model=settings.CLAUDE_MODEL,
