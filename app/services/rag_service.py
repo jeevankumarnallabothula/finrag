@@ -14,7 +14,8 @@ from typing import Optional
 
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferWindowMemory
@@ -51,15 +52,14 @@ class RAGService:
     """
 
     def __init__(self):
-        self.embeddings = OpenAIEmbeddings(
-            model=settings.EMBEDDING_MODEL,
-            openai_api_key=settings.OPENAI_API_KEY,
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name=settings.EMBEDDING_MODEL,
         )
-        self.llm = ChatOpenAI(
-            model=settings.OPENAI_MODEL,
+        self.llm = ChatAnthropic(
+            model=settings.CLAUDE_MODEL,
             temperature=0,
             max_tokens=settings.MAX_TOKENS,
-            openai_api_key=settings.OPENAI_API_KEY,
+            anthropic_api_key=settings.ANTHROPIC_API_KEY,
         )
         self.splitter = RecursiveCharacterTextSplitter(
             chunk_size=settings.CHUNK_SIZE,

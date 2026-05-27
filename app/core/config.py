@@ -10,10 +10,12 @@ class Settings(BaseSettings):
     APP_NAME: str = "FinRAG — Financial Document Q&A"
     VERSION: str = "1.0.0"
 
-    # OpenAI
-    OPENAI_API_KEY: str = ""
-    OPENAI_MODEL: str = "gpt-4o-mini"
-    EMBEDDING_MODEL: str = "text-embedding-3-small"
+    # Anthropic
+    ANTHROPIC_API_KEY: str = ""
+    CLAUDE_MODEL: str = "claude-haiku-4-5-20251001"
+
+    # Embeddings (HuggingFace — free, no API key needed)
+    EMBEDDING_MODEL: str = "sentence-transformers/all-MiniLM-L6-v2"
 
     # RAG tuning
     CHUNK_SIZE: int = 800
