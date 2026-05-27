@@ -1,6 +1,6 @@
 """
 FinRAG - Financial Document Q&A API
-Powered by LangChain, FastAPI, and OpenAI
+Powered by LangChain, FastAPI, and Claude
 """
 
 from fastapi import FastAPI
@@ -9,12 +9,16 @@ from contextlib import asynccontextmanager
 
 from app.api.routes import router
 from app.core.config import settings
+from app.services.rag_service import get_rag_service
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup and shutdown events."""
     print(f"🚀 FinRAG API starting up — {settings.APP_NAME} v{settings.VERSION}")
+    # Pre-load HuggingFace embedding model at startup to avoid first-request timeout
+    get_rag_service()
+    print("✅ Embedding model loaded and ready")
     yield
     print("🛑 FinRAG API shutting down")
 
@@ -23,7 +27,8 @@ app = FastAPI(
     title=settings.APP_NAME,
     description=(
         "A Retrieval-Augmented Generation (RAG) API for querying financial documents. "
-        "Upload PDFs (annual reports, earnings calls, SEC filings) and ask questions in natural language."
+        "Upload PDFs (annual reports, earnings calls, SEC filings) and ask questions in natural language. "
+        "Powered by Claude (Anthropic) + HuggingFace embeddings."
     ),
     version=settings.VERSION,
     lifespan=lifespan,
